@@ -1,5 +1,5 @@
 [![Build Status](https://dev.azure.com/ascenticse/DevOps%20Sandbox/_apis/build/status%2Fanushkaw98.pipelines-java?branchName=main)]
-[![Build Status](https://dev.azure.com/ascenticse/DevOps%20Sandbox/_apis/build/status%2Fanushkaw98.pipelines-java?branchName=main)](https://dev.azure.com/ascenticse/DevOps%20Sandbox/_build/latest?definitionId=449&branchName=main)(https://dev.azure.com/ascenticse/DevOps%20Sandbox/_build/latest?definitionId=440&branchName=main)
+(https://dev.azure.com/ascenticse/DevOps%20Sandbox/_build/latest?definitionId=449&branchName=main)(https://dev.azure.com/ascenticse/DevOps%20Sandbox/_build/latest?definitionId=440&branchName=main)
 # Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
