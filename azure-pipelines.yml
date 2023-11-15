@@ -9,48 +9,51 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-#this added when if we want single platform and multiple versions,
-strategy:
-  matrix:
-    jdk10:
-      jdkVersion: "1.10"
-    jdk11:
-      jdkVersion: "1.11"
-  maxParallel: 2
 
-steps:
+# #this added when if we want single platform and multiple versions,
+# strategy:
+#   matrix:
+#     jdk10:
+#       jdkVersion: "1.10"
+#     jdk11:
+#       jdkVersion: "1.11"
+#   maxParallel: 2
 
-- task: SonarQubePrepare@5
-  inputs:
-    SonarQube: 'sonar_service_connection'
-    scannerMode: 'Other'
-    extraProperties: |
-      # Additional properties that will be passed to the scanner, 
-      # Put one key=value per line, example:
-      # sonar.exclusions=**/*.bin
-      sonar.projectKey=sonar_project_java
+jobs:
+- job: Work
+  steps:
+
+  - task: SonarQubePrepare@5
+    inputs:
+      SonarQube: 'sonar_service_connection'
+      scannerMode: 'Other'
+      extraProperties: |
+        # Additional properties that will be passed to the scanner, 
+        # Put one key=value per line, example:
+        # sonar.exclusions=**/*.bin
+        sonar.projectKey=sonar_project_java
+
+        
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      mavenOptions: '-Xmx3072m'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.8'
+      jdkArchitectureOption: 'x64'
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      goals: 'package'
+      
+  - task: SonarQubeAnalyze@5
+    inputs:
+      jdkversion: 'JAVA_HOME_11_X64'
 
       
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
-     
-- task: SonarQubeAnalyze@5
-  inputs:
-    jdkversion: 'JAVA_HOME_11_X64'
-
-    
-#this will add test and code coverage reports 
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: "JaCoCo"
-    summaryFileLocation: "$(System.DefaultWorkingDirectory)/**/site/jacoco/jacoco.xml"
-    reportDirectory: "$(System.DefaultWorkingDirectory)/**/site/jacoco"
-    failIfCoverageEmpty: true
+  #this will add test and code coverage reports 
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: "JaCoCo"
+      summaryFileLocation: "$(System.DefaultWorkingDirectory)/**/site/jacoco/jacoco.xml"
+      reportDirectory: "$(System.DefaultWorkingDirectory)/**/site/jacoco"
+      failIfCoverageEmpty: true
