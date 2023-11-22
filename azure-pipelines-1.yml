@@ -1,7 +1,7 @@
 
- trigger:
- - main
- - test2
+ pr:
+  - main
+  - test2
 
  pool:
    vmImage: 'ubuntu-latest'
