@@ -22,18 +22,11 @@
     versionSpec: '11'
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'
- - task: Maven@4
+ 
+ - task: Maven@3
+   displayName: 'Maven pom.xml'
    inputs:
-     mavenPomFile: 'pom.xml'
-     goals: 'install sonar:sonar'
-     publishJUnitResults: true
-     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-     javaHomeOption: 'JDKVersion'
-     mavenVersionOption: 'Default'
-     mavenAuthenticateFeed: false
-     effectivePomSkip: false
-     sonarQubeRunAnalysis: true
-     sqMavenPluginVersionChoice: 'latest'
+    goals: 'install sonar:sonar'
  
  - task: SonarQubePublish@5
    inputs:
