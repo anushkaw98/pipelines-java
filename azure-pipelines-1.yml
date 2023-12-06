@@ -17,3 +17,28 @@
      publishJUnitResults: false
      testResultsFiles: '**/surefire-reports/TEST-*.xml'
      goals: 'package'
+
+ - task: SonarQubePrepare@5
+   inputs:
+    SonarQube: 'sonar_service'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'sonarymaljavapipeline'
+    cliProjectName: 'javapipeline-YMAL'
+    cliSources: '.'
+    extraProperties: |
+      # Additional properties that will be passed to the scanner, 
+      # Put one key=value per line, example:
+      # sonar.exclusions=**/*.bin
+      sonar.java.binaries=.
+    
+ - task: SonarQubeAnalyze@5
+   inputs:
+    jdkversion: 'JAVA_HOME_11_X64'
+
+ - task: SonarQubePublish@5
+   inputs:
+      pollingTimeoutSec: '300'
+
+
+  
